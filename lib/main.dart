@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(const ScaffoldExampleApp());
+import './common/theme.dart';
+import './models/form.dart';
 
-class ScaffoldExampleApp extends StatelessWidget {
-  const ScaffoldExampleApp({super.key});
+void main() => runApp(const MyApp());
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(home: Home());
-  }
+GoRouter router() {
+  return GoRouter(
+    initialLocation: '/form',
+    routes: [
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const Home(),
+      ),
+      GoRoute(
+        path: '/form',
+        builder: (context, state) => const Form(),
+      ),
+    ],
+  );
 }
 
 class Home extends StatelessWidget {
@@ -16,39 +28,38 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('nn')),
-      body: const Column(children: [Text("aa"), MyWidget()]),
-    );
+    return const Placeholder();
   }
 }
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
-
-  @override
-  State<MyWidget> createState() => _MyWidgetState();
-}
-
-class _MyWidgetState extends State<MyWidget> {
-  int _size = 1;
-
-  void increase() {
-    setState(() {
-      _size += 1;
-    });
-  }
+class Form extends StatelessWidget {
+  const Form({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text('$_size}'),
-        IconButton(
-            icon: const Icon(Icons.star),
-            onPressed: increase,
-          )
-      ],
+    return Consumer<FormModel>(builder: (context, model, child) {
+          return Column(
+            children: [
+              Text('${model.counter}'),
+              TextButton(onPressed: model.increase, child: const Text('increase'))
+            ],
+          );
+        });
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (BuildContext context) => FormModel())],
+      child: MaterialApp.router(
+        title: 'Provider Demo',
+        theme: appTheme,
+        routerConfig: router(),
+      ),
     );
   }
 }
