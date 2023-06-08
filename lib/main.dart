@@ -78,8 +78,8 @@ class _DbConnectionFormState extends State<DbConnectionForm> {
   var _username = '';
   var _password = '';
 
-  void _connect() {
-    Provider.of<FormModel>(context, listen: false).insert(type: _type, host: _host, username: _username, password: _password);
+  Future<void> _connect() async {
+    await Provider.of<FormModel>(context, listen: false).insert(type: _type, host: _host, username: _username, password: _password);
   }
 
   @override
