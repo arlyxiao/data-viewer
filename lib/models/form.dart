@@ -7,17 +7,21 @@ class FormModel extends ChangeNotifier {
     'mysql': [],
     'postgres': [],
   };
+  var _database = 'mysql';
   var person = {'counter': 0};
 
   int get counter => person['counter']!;
+  String get database => _database;
 
-  Future<void> insert({required String type, required String host, required String username, required String password}) async {
+  Future<void> insert(
+      {required String type, required String host, required int port, required String username, required String password, required String db}) async {
     /* if (!dbTypes.contains(type)) {
       return;
     } */
 
     try {
-      var settings = ConnectionSettings(host: 'localhost', port: 3306, user: 'root', db: 'test');
+      // var settings = ConnectionSettings(host: 'localhost', port: 3306, user: 'root', db: 'test');
+      var settings = ConnectionSettings(host: host, port: port, user: username, db: db);
       var conn = await MySqlConnection.connect(settings);
       var results = await conn.query('SELECT * FROM `users`');
 
@@ -39,13 +43,19 @@ class FormModel extends ChangeNotifier {
       }
     }
 
-    // dbList[type]!.add({'host': host, 'username': username, 'password': password});
+    dbList[type]!.add({'host': host, 'username': username, 'password': password});
 
     notifyListeners();
   }
 
   void increase() {
     person['counter'] = person['counter']! + 1;
+
+    notifyListeners();
+  }
+
+  void selectDatabase(String value) {
+    _database = value;
 
     notifyListeners();
   }

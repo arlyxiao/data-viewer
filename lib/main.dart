@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import './common/theme.dart';
 import './models/form.dart';
+import './views/db_types.dart';
 
 void main() => runApp(const MyApp());
 
@@ -41,8 +42,8 @@ class Form extends StatelessWidget {
         body: Column(
       children: [
         Text('${context.watch<FormModel>().counter}'),
-        const SizedBox(width: 400, height: 300, child: DbConnectionForm()),
-        const SizedBox(width: 400, height: 200, child: MyWidget()),
+        const SizedBox(width: 400, height: 600, child: DbConnectionForm()),
+        // const SizedBox(width: 400, height: 200, child: MyWidget()),
         TextButton(onPressed: Provider.of<FormModel>(context).increase, child: const Text('increase'))
       ],
     ));
@@ -73,27 +74,25 @@ class DbConnectionForm extends StatefulWidget {
 }
 
 class _DbConnectionFormState extends State<DbConnectionForm> {
-  var _type = '';
   var _host = '';
+  var _port = 3306;
   var _username = '';
   var _password = '';
+  var _db = '';
 
   Future<void> _connect() async {
-    await Provider.of<FormModel>(context, listen: false).insert(type: _type, host: _host, username: _username, password: _password);
+    final database = Provider.of<FormModel>(context, listen: false).database;
+    await Provider.of<FormModel>(context, listen: false)
+        .insert(type: database, host: _host, port: _port, username: _username, password: _password, db: _db);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const DropdownMenuExample(),
         TextField(
-          onChanged: (text) {
-            setState(() {
-              _type = text;
-            });
-          },
-        ),
-        TextField(
+          decoration: const InputDecoration(border: InputBorder.none, hintText: 'host'),
           onChanged: (text) {
             setState(() {
               _host = text;
@@ -101,6 +100,15 @@ class _DbConnectionFormState extends State<DbConnectionForm> {
           },
         ),
         TextField(
+          decoration: const InputDecoration(border: InputBorder.none, hintText: 'Port'),
+          onChanged: (text) {
+            setState(() {
+              _port = int.parse(text);
+            });
+          },
+        ),
+        TextField(
+          decoration: const InputDecoration(border: InputBorder.none, hintText: 'Username'),
           onChanged: (text) {
             setState(() {
               _username = text;
@@ -108,9 +116,18 @@ class _DbConnectionFormState extends State<DbConnectionForm> {
           },
         ),
         TextField(
+          decoration: const InputDecoration(border: InputBorder.none, hintText: 'Password'),
           onChanged: (text) {
             setState(() {
               _password = text;
+            });
+          },
+        ),
+        TextField(
+          decoration: const InputDecoration(border: InputBorder.none, hintText: 'Database Name'),
+          onChanged: (text) {
+            setState(() {
+              _db = text;
             });
           },
         ),
