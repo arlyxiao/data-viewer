@@ -14,7 +14,7 @@ class FormModel extends ChangeNotifier {
   String get database => _database;
 
   Future<void> insert(
-      {required String type, required String host, required int port, required String username, required String password, required String db}) async {
+      {required String database, required String host, required int port, required String username, required String password, required String db}) async {
     /* if (!dbTypes.contains(type)) {
       return;
     } */
@@ -43,7 +43,7 @@ class FormModel extends ChangeNotifier {
       }
     }
 
-    dbList[type]!.add({'host': host, 'username': username, 'password': password});
+    dbList[database]!.add({'host': host, 'username': username, 'password': password});
 
     notifyListeners();
   }

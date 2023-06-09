@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -74,16 +75,16 @@ class DbConnectionForm extends StatefulWidget {
 }
 
 class _DbConnectionFormState extends State<DbConnectionForm> {
-  var _host = '';
+  var _host = 'localhost';
   var _port = 3306;
-  var _username = '';
+  var _username = 'root';
   var _password = '';
   var _db = '';
 
   Future<void> _connect() async {
     final database = Provider.of<FormModel>(context, listen: false).database;
     await Provider.of<FormModel>(context, listen: false)
-        .insert(type: database, host: _host, port: _port, username: _username, password: _password, db: _db);
+        .insert(database: database, host: _host, port: _port, username: _username, password: _password, db: _db);
   }
 
   @override
@@ -91,7 +92,8 @@ class _DbConnectionFormState extends State<DbConnectionForm> {
     return Column(
       children: [
         const DropdownMenuExample(),
-        TextField(
+        TextFormField(
+          initialValue: 'localhost',
           decoration: const InputDecoration(border: InputBorder.none, hintText: 'host'),
           onChanged: (text) {
             setState(() {
@@ -99,15 +101,27 @@ class _DbConnectionFormState extends State<DbConnectionForm> {
             });
           },
         ),
-        TextField(
+        TextFormField(
+          initialValue: '3306',
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            LengthLimitingTextInputFormatter(5),
+          ],
           decoration: const InputDecoration(border: InputBorder.none, hintText: 'Port'),
           onChanged: (text) {
             setState(() {
-              _port = int.parse(text);
+              try {
+                _port = int.parse(text);
+              } on Exception catch (e) {
+                // ignore: avoid_print
+                print('something is wrong $e');
+              }
             });
           },
         ),
-        TextField(
+        TextFormField(
+          initialValue: 'root',
           decoration: const InputDecoration(border: InputBorder.none, hintText: 'Username'),
           onChanged: (text) {
             setState(() {

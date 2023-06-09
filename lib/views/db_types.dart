@@ -31,7 +31,7 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
       onSelected: (ValueLabel? option) {
         setState(() {
           selectedValue = option;
-          Provider.of<FormModel>(context).selectDatabase(option!.value);
+          Provider.of<FormModel>(context, listen: false).selectDatabase(option!.value);
         });
       },
     );
