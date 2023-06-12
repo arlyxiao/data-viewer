@@ -14,14 +14,20 @@ class FormModel extends ChangeNotifier {
   String get database => _database;
 
   Future<void> insert(
-      {required String database, required String host, required int port, required String username, required String password, required String db}) async {
+      {required String database,
+      required String host,
+      required int port,
+      required String username,
+      required String password,
+      required String db}) async {
     /* if (!dbTypes.contains(type)) {
       return;
     } */
 
     try {
       // var settings = ConnectionSettings(host: 'localhost', port: 3306, user: 'root', db: 'test');
-      var settings = ConnectionSettings(host: host, port: port, user: username, db: db);
+      var settings =
+          ConnectionSettings(host: host, port: port, user: username, db: db);
       var conn = await MySqlConnection.connect(settings);
       var results = await conn.query('SELECT * FROM `users`');
 
@@ -40,10 +46,13 @@ class FormModel extends ChangeNotifier {
     } on Exception catch (e) {
       if (kDebugMode) {
         print('something is wrong: $e');
+        print(db);
+        print(host);
       }
     }
 
-    dbList[database]!.add({'host': host, 'username': username, 'password': password});
+    dbList[database]!
+        .add({'host': host, 'username': username, 'password': password});
 
     notifyListeners();
   }
