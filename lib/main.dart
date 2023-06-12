@@ -46,7 +46,6 @@ class Form extends StatelessWidget {
           child: SizedBox(
               width: 400, height: 600, child: DatabaseConnectionForm()),
         ),
-        // const SizedBox(width: 400, height: 200, child: MyWidget()),
         TextButton(
             onPressed: Provider.of<FormModel>(context).increase,
             child: const Text('increase'))
@@ -70,24 +69,5 @@ class MyApp extends StatelessWidget {
         routerConfig: router(),
       ),
     );
-  }
-}
-
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var entries = context.watch<FormModel>().dbList['mysql'];
-
-    return ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: entries!.length,
-        itemBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 50,
-            child: Center(child: Text('Entry ${entries[index]}')),
-          );
-        });
   }
 }
