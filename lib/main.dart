@@ -13,7 +13,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (BuildContext context) => ConnectionModel())],
+      providers: [
+        ChangeNotifierProvider(
+            create: (BuildContext context) => ConnectionModel())
+      ],
       child: MaterialApp.router(
         title: 'Database Viewer',
         theme: appTheme,

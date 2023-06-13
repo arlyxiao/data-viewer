@@ -34,18 +34,20 @@ class _FormState extends State<ConnectionForm> {
     }
 
     return Column(
-      children: [
+      children: <Widget>[
+        const SizedBox(height: 20),
         const DatabaseDropdownMenu(),
+        const SizedBox(height: 10),
         TextFormField(
           initialValue: DatabaseConstant.host,
-          decoration:
-              const InputDecoration(border: InputBorder.none, hintText: 'host'),
+          decoration: const InputDecoration(labelText: 'host'),
           onChanged: (text) {
             setState(() {
               _host = text;
             });
           },
         ),
+        const SizedBox(height: 10),
         TextFormField(
           initialValue: '${DatabaseConstant.port}',
           keyboardType: TextInputType.number,
@@ -53,8 +55,7 @@ class _FormState extends State<ConnectionForm> {
             FilteringTextInputFormatter.digitsOnly,
             LengthLimitingTextInputFormatter(5),
           ],
-          decoration:
-              const InputDecoration(border: InputBorder.none, hintText: 'Port'),
+          decoration: const InputDecoration(labelText: 'Port'),
           onChanged: (text) {
             setState(() {
               try {
@@ -66,37 +67,49 @@ class _FormState extends State<ConnectionForm> {
             });
           },
         ),
+        const SizedBox(height: 10),
         TextFormField(
           initialValue: DatabaseConstant.username,
-          decoration: const InputDecoration(
-              border: InputBorder.none, hintText: 'Username'),
+          decoration: const InputDecoration(labelText: 'Username'),
           onChanged: (text) {
             setState(() {
               _username = text;
             });
           },
         ),
+        const SizedBox(height: 10),
         TextFormField(
           initialValue: DatabaseConstant.password,
-          decoration: const InputDecoration(
-              border: InputBorder.none, hintText: 'Password'),
+          decoration: const InputDecoration(labelText: 'Password'),
           onChanged: (text) {
             setState(() {
               _password = text;
             });
           },
         ),
+        const SizedBox(height: 10),
         TextFormField(
           initialValue: DatabaseConstant.name,
-          decoration: const InputDecoration(
-              border: InputBorder.none, hintText: 'Database Name'),
+          decoration: const InputDecoration(labelText: 'Database Name'),
           onChanged: (text) {
             setState(() {
               _name = text;
             });
           },
         ),
-        TextButton(onPressed: connect, child: const Text('Connect'))
+        const SizedBox(height: 20),
+        TextButton(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.teal,
+            disabledForegroundColor: Colors.grey,
+            fixedSize: const Size.fromWidth(200),
+            padding: const EdgeInsets.all(20),
+            textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          ),
+          onPressed: connect,
+          child: const Text('Connect'),
+        ),
       ],
     );
   }

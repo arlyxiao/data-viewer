@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class MainLayout extends StatelessWidget {
-  Widget child;
+  final Widget child;
 
-  MainLayout({required this.child, super.key});
+  const MainLayout({required this.child, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
             height: 800,
-            width: 800,
+            width: double.infinity,
             decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(

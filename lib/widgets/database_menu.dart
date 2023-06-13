@@ -16,28 +16,28 @@ class _DatabaseDropdownMenuState extends State<DatabaseDropdownMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final List<DropdownMenuEntry<ValueLabel>> options =
-        <DropdownMenuEntry<ValueLabel>>[];
+    final List<DropdownMenuEntry<ValueLabel>> options = <DropdownMenuEntry<ValueLabel>>[];
     for (final ValueLabel option in ValueLabel.values) {
       options.add(
-        DropdownMenuEntry<ValueLabel>(
-            value: option, label: option.label, enabled: true),
+        DropdownMenuEntry<ValueLabel>(value: option, label: option.label, enabled: true),
       );
     }
 
-    return DropdownMenu<ValueLabel>(
+    return SizedBox(
+      width: double.infinity,
+      child: DropdownMenu<ValueLabel>(
       initialSelection: ValueLabel.mysql,
       controller: colorController,
-      label: const Text('Database'),
+      inputDecorationTheme: const InputDecorationTheme(border: InputBorder.none),
+      label: const Text('Database', style: TextStyle(fontSize: 14)),
       dropdownMenuEntries: options,
       onSelected: (ValueLabel? option) {
         setState(() {
           selectedValue = option;
-          Provider.of<ConnectionModel>(context, listen: false)
-              .selectDatabase(option!.value);
+          Provider.of<ConnectionModel>(context, listen: false).selectDatabase(option!.value);
         });
       },
-    );
+    ));
   }
 }
 
