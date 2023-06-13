@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:mysql1/mysql1.dart';
 
-class FormModel extends ChangeNotifier {
+class ConnectionModel extends ChangeNotifier {
   final dbTypes = ['mysql', 'postgres'];
   var dbList = {
     'mysql': [],

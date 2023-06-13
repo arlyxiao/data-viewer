@@ -3,17 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../common/constant.dart';
-import '../models/form.dart';
-import './database_menu.dart';
+import '../models/connection_model.dart';
+import 'database_menu.dart';
 
-class DatabaseConnectionForm extends StatefulWidget {
-  const DatabaseConnectionForm({super.key});
+class ConnectionForm extends StatefulWidget {
+  const ConnectionForm({super.key});
 
   @override
-  State<DatabaseConnectionForm> createState() => _FormState();
+  State<ConnectionForm> createState() => _FormState();
 }
 
-class _FormState extends State<DatabaseConnectionForm> {
+class _FormState extends State<ConnectionForm> {
   var _host = DatabaseConstant.host;
   var _port = DatabaseConstant.port;
   var _username = DatabaseConstant.username;
@@ -23,9 +23,14 @@ class _FormState extends State<DatabaseConnectionForm> {
   @override
   Widget build(BuildContext context) {
     void connect() {
-      final database = context.read<FormModel>().database;
-      Provider.of<FormModel>(context, listen: false)
-          .insert(database: database, host: _host, port: _port, username: _username, password: _password, db: _name);
+      final database = context.read<ConnectionModel>().database;
+      Provider.of<ConnectionModel>(context, listen: false).insert(
+          database: database,
+          host: _host,
+          port: _port,
+          username: _username,
+          password: _password,
+          db: _name);
     }
 
     return Column(
@@ -33,7 +38,8 @@ class _FormState extends State<DatabaseConnectionForm> {
         const DatabaseDropdownMenu(),
         TextFormField(
           initialValue: DatabaseConstant.host,
-          decoration: const InputDecoration(border: InputBorder.none, hintText: 'host'),
+          decoration:
+              const InputDecoration(border: InputBorder.none, hintText: 'host'),
           onChanged: (text) {
             setState(() {
               _host = text;
@@ -47,7 +53,8 @@ class _FormState extends State<DatabaseConnectionForm> {
             FilteringTextInputFormatter.digitsOnly,
             LengthLimitingTextInputFormatter(5),
           ],
-          decoration: const InputDecoration(border: InputBorder.none, hintText: 'Port'),
+          decoration:
+              const InputDecoration(border: InputBorder.none, hintText: 'Port'),
           onChanged: (text) {
             setState(() {
               try {
@@ -61,7 +68,8 @@ class _FormState extends State<DatabaseConnectionForm> {
         ),
         TextFormField(
           initialValue: DatabaseConstant.username,
-          decoration: const InputDecoration(border: InputBorder.none, hintText: 'Username'),
+          decoration: const InputDecoration(
+              border: InputBorder.none, hintText: 'Username'),
           onChanged: (text) {
             setState(() {
               _username = text;
@@ -70,7 +78,8 @@ class _FormState extends State<DatabaseConnectionForm> {
         ),
         TextFormField(
           initialValue: DatabaseConstant.password,
-          decoration: const InputDecoration(border: InputBorder.none, hintText: 'Password'),
+          decoration: const InputDecoration(
+              border: InputBorder.none, hintText: 'Password'),
           onChanged: (text) {
             setState(() {
               _password = text;
@@ -79,7 +88,8 @@ class _FormState extends State<DatabaseConnectionForm> {
         ),
         TextFormField(
           initialValue: DatabaseConstant.name,
-          decoration: const InputDecoration(border: InputBorder.none, hintText: 'Database Name'),
+          decoration: const InputDecoration(
+              border: InputBorder.none, hintText: 'Database Name'),
           onChanged: (text) {
             setState(() {
               _name = text;

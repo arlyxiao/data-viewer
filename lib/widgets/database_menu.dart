@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/form.dart';
+import '../models/connection_model.dart';
 
 class DatabaseDropdownMenu extends StatefulWidget {
   const DatabaseDropdownMenu({super.key});
@@ -33,7 +33,7 @@ class _DatabaseDropdownMenuState extends State<DatabaseDropdownMenu> {
       onSelected: (ValueLabel? option) {
         setState(() {
           selectedValue = option;
-          Provider.of<FormModel>(context, listen: false)
+          Provider.of<ConnectionModel>(context, listen: false)
               .selectDatabase(option!.value);
         });
       },
